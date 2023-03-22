@@ -1,55 +1,53 @@
 <template>
   <div class="q-pa-md">
-
     <q-table
       v-if="posts.length"
-      title="Valute"
+      title="Accommodations"
       :rows="posts"
       :columns="columns"
       row-key="id"
+      :pagination="initialPagination"
       class="col"
     />
     <!--<pre>{{ posts }}</pre>-->
   </div>
 </template>
 
-
 <script>
-
 import { axios } from '../boot/axios'
 
 export default {
   name: 'CurrencyListPage',
   data() {
     return {
+      initialPagination: {
+        rowsPerPage: 11
+        // rowsNumber: xx if getting data from a server
+      },
       columns: [
         {
           name: 'id',
           label: 'Id',
           field: 'id',
           align: 'left',
-          sortable: true
         },
         {
           name: 'createdAt',
           label: 'Date',
           field: 'createdAt',
           align: 'left',
-          sortable: true
         },
         {
           name: 'priceInEur',
           label: 'Price EUR',
           field: 'priceInEur',
           align: 'left',
-          sortable: true
         },
         {
           name: 'avaliable',
           label: 'Available',
           field: 'avaliable',
           align: 'left',
-          sortable: true
         },
         {
           name: 'city',
@@ -83,10 +81,9 @@ export default {
       posts: []
     }
   },
-  mounted() {
-    console.log('posts:', this.posts)
-    this.getPosts();
 
+  mounted() {
+    this.getPosts();
   },
 
   methods: {
@@ -94,7 +91,7 @@ export default {
       axios.get('https://5ddbbbd5041ac10014de14d7.mockapi.io/accommodations/prices')
         .then((res) => {
           this.posts = res.data
-          console.log(res.data)
+          //console.log(res.data)
         })
         .catch((err) => {
           console.log(err)
