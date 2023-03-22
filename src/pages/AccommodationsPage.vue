@@ -22,7 +22,6 @@ export default {
     return {
       initialPagination: {
         rowsPerPage: 11
-        // rowsNumber: xx if getting data from a server
       },
       columns: [
         {
