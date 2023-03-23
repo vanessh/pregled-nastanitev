@@ -1,25 +1,48 @@
 <template>
+     <div v-if="$q.screen.gt.xs" class="col">
+      <q-toggle v-model="visibleOnlyAvailable" val="available" label="Show only available accommodations"/>
+      <q-space />
+    </div>
+
+<q-select
+          v-else
+          v-model="visibleOnlyAvailable"
+          multiple
+          borderless
+          dense
+          options-dense
+          :display-value="$q.lang.table.columns"
+          emit-value
+          map-options
+          :options="columns"
+          option-value="name"
+          style="min-width: 150px"
+        />
   <div class="q-pa-md">
     <q-table
-      v-if="posts.length"
+      v-if="accommodations.length"
       title="Accommodations"
-      :rows="posts"
+      :rows="accommodations"
       :columns="columns"
       row-key="id"
       :pagination="initialPagination"
       class="col"
     />
-    <!--<pre>{{ posts }}</pre>-->
+    <!--<pre>{{ accommodations }}</pre>-->
   </div>
+
 </template>
 
 <script>
 import { axios } from '../boot/axios'
+import { ref } from 'vue'
 
 export default {
-  name: 'CurrencyListPage',
+  name: 'AccommodationsPage',
   data() {
     return {
+      visibleOnlyAvailable: ref([ 'avaliable' ]),
+
       initialPagination: {
         rowsPerPage: 11
       },
@@ -77,19 +100,19 @@ export default {
           sortable: true
         },
       ],
-      posts: []
+      accommodations: []
     }
   },
 
   mounted() {
-    this.getPosts();
+    this.getAccommodations();
   },
 
   methods: {
-    getPosts() {
+    getAccommodations() {
       axios.get('https://5ddbbbd5041ac10014de14d7.mockapi.io/accommodations/prices')
-        .then((res) => {
-          this.posts = res.data
+        .then(res => {
+          this.accommodations = res.data
           //console.log(res.data)
         })
         .catch((err) => {

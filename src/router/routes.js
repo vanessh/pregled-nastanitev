@@ -10,7 +10,7 @@ const routes = [
         name: "CurrencyList"
       },
       {
-        path: "/prices",
+        path: "/accommodations",
         component: () => import("src/pages/AccommodationsPage.vue"),
         name: "Prices"
       }
