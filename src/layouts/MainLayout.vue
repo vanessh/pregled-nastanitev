@@ -3,13 +3,10 @@
 
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
-
         <q-toolbar-title class="text-center">
-          <!--
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>-->
           Pregled nastanitev
+          <q-avatar icon="maps_home_work">
+          </q-avatar>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

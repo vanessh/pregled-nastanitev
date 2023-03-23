@@ -1,28 +1,15 @@
+<!--Tabela vseh nastanitev-->
 <template>
-     <div v-if="$q.screen.gt.xs" class="col">
-      <q-toggle v-model="visibleOnlyAvailable" val="available" label="Show only available accommodations"/>
+      <q-toggle
+      v-model="showAvaliableAccommodations"
+      val="avaliable"
+      label="Show only avaliable accommodations"/>
       <q-space />
-    </div>
-
-<q-select
-          v-else
-          v-model="visibleOnlyAvailable"
-          multiple
-          borderless
-          dense
-          options-dense
-          :display-value="$q.lang.table.columns"
-          emit-value
-          map-options
-          :options="columns"
-          option-value="name"
-          style="min-width: 150px"
-        />
   <div class="q-pa-md">
     <q-table
-      v-if="accommodations.length"
+      v-if="filteredAccommodations.length"
       title="Accommodations"
-      :rows="accommodations"
+      :rows="filteredAccommodations"
       :columns="columns"
       row-key="id"
       :pagination="initialPagination"
@@ -30,18 +17,16 @@
     />
     <!--<pre>{{ accommodations }}</pre>-->
   </div>
-
 </template>
 
 <script>
 import { axios } from '../boot/axios'
-import { ref } from 'vue'
 
 export default {
   name: 'AccommodationsPage',
   data() {
     return {
-      visibleOnlyAvailable: ref([ 'avaliable' ]),
+      showAvaliableAccommodations: false,
 
       initialPagination: {
         rowsPerPage: 11
@@ -67,7 +52,7 @@ export default {
         },
         {
           name: 'avaliable',
-          label: 'Available',
+          label: 'Avaliable',
           field: 'avaliable',
           align: 'left',
         },
@@ -108,6 +93,16 @@ export default {
     this.getAccommodations();
   },
 
+  computed: {
+    //Show only avaliable accommodations
+  filteredAccommodations() {
+    if (!this.showAvaliableAccommodations) {
+      return this.accommodations;
+    }
+    return this.accommodations.filter(accommodation => accommodation.avaliable);
+  }
+},
+
   methods: {
     getAccommodations() {
       axios.get('https://5ddbbbd5041ac10014de14d7.mockapi.io/accommodations/prices')
@@ -122,3 +117,4 @@ export default {
   }
 }
 </script>
+

@@ -12,7 +12,7 @@ const routes = [
       {
         path: "/accommodations",
         component: () => import("src/pages/AccommodationsPage.vue"),
-        name: "Prices"
+        name: "AccommodationsPage"
       }
 
     ],
