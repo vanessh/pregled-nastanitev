@@ -1,19 +1,22 @@
 <!--Multiple select valut-->
 <template>
-    <div class="q-pa-md" text-center  >
-      <p class="text-primary">Izberite valute</p>
+  <div class="q-pa-md" text-center>
+    <p class="text-primary">Izberite valute</p>
     <div class="q-gutter-md row items-start">
       <q-select
-        filled
-        v-model="multiple"
-        multiple
-        :options="currency"
-        label="Valute"
-        style="width: 250px"
-      />
-      <q-btn to="/accommodations" class="q-pa-md" push color="primary" round icon="maps_home_work" />
-      </div>
-      </div>
+      filled
+      v-model="multiple"
+      multiple
+      :options="currency"
+      label="Valute"
+      style="width: 250px" />
+      <q-btn
+      to="/accommodations"
+      class="q-pa-md"
+      push color="primary"
+      round icon="maps_home_work" />
+    </div>
+  </div>
 </template>
 
 <script>
