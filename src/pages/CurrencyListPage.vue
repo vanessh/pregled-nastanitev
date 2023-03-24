@@ -14,7 +14,9 @@
       to="/accommodations"
       class="q-pa-md"
       push color="primary"
-      round icon="maps_home_work" />
+      round icon="maps_home_work"
+      :query="{ currencies: JSON.stringify(multiple) }"
+      @click="goToAccommodationsPage" />
     </div>
   </div>
 </template>
@@ -22,7 +24,6 @@
 <script>
 import axios from 'axios'
 import { ref } from 'vue'
-
 export default {
   name: 'CurrencyListPage',
   data() {
@@ -33,12 +34,21 @@ export default {
       currency: []
     }
   },
-
   mounted() {
     this.getExchangeRates()
   },
-
   methods: {
+    logSelectedCurrencies() {
+    console.log(this.multiple);
+  },
+  goToAccommodationsPage() {
+    this.$router.push({
+      name: 'AccommodationsPage',
+      query: {
+        currencies: JSON.stringify(this.multiple)
+      }
+    })
+  },
     getExchangeRates() {
       axios
         .get(`https://api.exchangerate-api.com/v4/latest/EUR`)
@@ -54,4 +64,3 @@ export default {
   }
 }
 </script>
-

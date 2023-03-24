@@ -8,12 +8,13 @@
   <div class="q-pa-md">
     <q-tr :props="props">
         <q-td>
-          <q-btn icon="expand_more" @click.stop="toggleColumns" />
+          <q-btn icon="chevron_right" @click.stop="toggleColumns" />
         </q-td>
       </q-tr>
     <q-table
     v-if="filteredAccommodations.length"
-    title="Accommodations" :rows="filteredAccommodations"
+    title="Accommodations"
+    :rows="filteredAccommodations"
     :columns="displayedColumns"
     row-key="id"
     @click="onRowClick"
@@ -21,23 +22,20 @@
     class="col" >
 
     </q-table>
-    <!--<pre>{{ filteredAccommodations }}</pre>-->
+    <!--<pre>{{ filteredAccommodations }}</pre>
+      @click="onRowClick"-->
   </div>
 </template>
 
 <script>
 //TODO: header slot
 //TODO: expand rows to show city, address, country
-
 import { axios } from '../boot/axios'
-
 export default {
-
   name: 'AccommodationsPage',
   data() {
     return {
       showAvaliableAccommodations: false,
-
       initialPagination: {
         rowsPerPage: 11
       },
@@ -51,7 +49,7 @@ export default {
         {
           name: 'createdAt',
           label: 'Date',
-          field: 'createdAt',
+          field: row => this.formatDate(row.createdAt),
           align: 'left',
         },
         {
@@ -94,22 +92,18 @@ export default {
           align: 'left',
           sortable: true
         },
-
       ],
       accommodations: [],
       displayExtraColumns: false,
     }
   },
-
   mounted() {
     this.getAccommodations();
   },
-
   computed: {
     displayedColumns() {
       return this.columns.filter(
         (col) =>
-
           !this.displayExtraColumns ||
           col.name === 'id' ||
           col.name === 'createdAt' ||
@@ -118,7 +112,6 @@ export default {
           col.name === 'name'
       )
     },
-
     //Show only avaliable accommodations
     filteredAccommodations() {
       if (!this.showAvaliableAccommodations) {
@@ -127,7 +120,6 @@ export default {
       return this.accommodations.filter(accommodation => accommodation.avaliable);
     }
   },
-
   methods: {
     getAccommodations() {
       axios.get('https://5ddbbbd5041ac10014de14d7.mockapi.io/accommodations/prices')
@@ -145,30 +137,30 @@ export default {
       const index = row.rowIndex - 1; // subtract 1 to account for the header row
       const clickedAccommodation = this.filteredAccommodations[index];
       const accommodationId = clickedAccommodation.id;
-      // console.log(accommodationId);/
-      axios.get(`https://5ddbbbd5041ac10014de14d7.mockapi.io/accommodations/prices/${accommodationId}`)
-        .then(res => {
-          this.$router.push({ name: 'AccommodationDetailsPage', props: { accommodation: clickedAccommodation } });
-          console.log('clicked on', clickedAccommodation)
-          console.log('id', accommodationId)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+      console.log('clicked on', clickedAccommodation)
+      console.log('id', accommodationId)
+
+      const currencies = this.multiple ? JSON.stringify(this.multiple) : null;
+
+      this.$router.push({
+      name: 'AccommodationDetailsPage',
+      query: {
+        accommodation: JSON.stringify(clickedAccommodation)
+      }
+    })
+},
+
     //Show city, address, country when clicked on icon
     toggleColumns() {
       this.displayExtraColumns = !this.displayExtraColumns;
     },
 
-    /*toggleRow(index) {
-    this.$set(this.filteredAccommodations[index], 'expanded', !this.filteredAccommodations[index].expanded);
-  },*/
+    formatDate(dateString) {
+    const date = new Date(dateString)
+    const options = { year: 'numeric', month: 'long', day: 'numeric' }
+    return date.toLocaleDateString('en-US', options)
+  }
+
   }
 }
-
 </script>
-
-
-
-
