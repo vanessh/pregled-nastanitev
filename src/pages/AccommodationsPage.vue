@@ -60,8 +60,8 @@ export default {
         },
         {
           name: 'avaliable',
-          label: 'Avaliable',
-          field: 'avaliable',
+          label: 'Availability',
+          field: row => row.avaliable ? 'Available' : 'Unavailable',
           align: 'left',
         },
         {
@@ -115,7 +115,8 @@ export default {
     //Show only avaliable accommodations
     filteredAccommodations() {
       if (!this.showAvaliableAccommodations) {
-        return this.accommodations;
+        return this.accommodations
+        ;
       }
       return this.accommodations.filter(accommodation => accommodation.avaliable);
     }
