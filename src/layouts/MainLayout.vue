@@ -5,7 +5,7 @@
       <q-toolbar>
         <q-toolbar-title class="text-center">
           Pregled nastanitev
-          <q-avatar icon="maps_home_work">
+          <q-avatar icon="maps_home_work" >
           </q-avatar>
         </q-toolbar-title>
       </q-toolbar>
