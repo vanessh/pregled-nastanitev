@@ -1,5 +1,11 @@
 <template>
   <q-card class="accommodation-card">
+    <div>
+      <p>Selected currencies:</p>
+      <ul>
+        <li v-for="(currency, index) in currencies" :key="index">{{ currency }}</li>
+      </ul>
+    </div>
     <q-card-section class="accommodation-details">
       <h4 class="accommodation-title">{{ accommodation.name }}</h4>
     </q-card-section>
@@ -45,6 +51,7 @@ import store from '../store'
 // import  selectedCurrenciesRates from  './CurrencyListPage.vue';
 // console.log("test", selectedCurrenciesRates)
 console.log("neke", store.state.selectedCurrencies)
+console.log("burek", store.state.selectedCurrenciesRates)
 export default {
   name: 'AccommodationDetailsPage',
 
@@ -79,8 +86,8 @@ export default {
     //const currencies = JSON.parse(this.$route.query.currencies)
     //const rates = JSON.parse(this.$route.query.rates)
 
-    console.log(this.currencies) // array of currencies
-    console.log(this.rates) // array of rates
+    //console.log(this.currencies) // array of currencies
+    //console.log(this.rates) // array of rates
 
   },
 
