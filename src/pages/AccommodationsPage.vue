@@ -5,7 +5,7 @@
   <div class="q-pa-md">
     <q-tr :props="props">
       <q-td>
-        <q-btn icon="chevron_right" @click.stop="expandColumns" />
+        <q-btn :icon="icon" @click.stop="expandColumns" />
       </q-td>
     </q-tr>
     <q-table to="/accommodationDetails" v-if="filteredAccommodations.length" title="Accommodations"
@@ -23,6 +23,8 @@ export default {
   name: 'AccommodationsPage',
   data() {
     return {
+      // Ikona, ki je prikazana na začetku, ko ni razširjen pregled nastanitev
+      icon: 'chevron_right',
       // Boolean spremenljivka, ki kontrolira prikaz vseh nastanitev/nastanitev ki so na voljo
       showAvaliableAccommodations: false,
       // omogočimo prikaz 11 nastanitev naenkrat
@@ -87,7 +89,7 @@ export default {
       // polje vseh nastanitev
       accommodations: [],
       // Boolean spremenljivka ki kontrolira prikaz dodatnih stolpcev
-      displayExtraColumns: false,
+      displayExtraColumns: true,
       // objekt, ki hrani menjalne tečaje valut
       selectedCurrenciesRates: {}
     }
@@ -148,6 +150,7 @@ export default {
     },
     //Prikaz city, address, country ob kliku na ikono
     expandColumns() {
+      this.icon = this.icon === 'chevron_right' ? 'chevron_left' : 'chevron_right';
       this.displayExtraColumns = !this.displayExtraColumns;
     },
     //Format date
